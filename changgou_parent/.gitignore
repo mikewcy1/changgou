@@ -1,0 +1,8 @@
+# 忽略.idea中的所有内容
+.idea/
+
+# 忽略idea所有.iml文件
+*.iml
+
+# 忽略所有model中的target目录中的内容
+**/target/
