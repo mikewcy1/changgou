@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /*
  * @author 王昌耀
@@ -15,7 +16,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_brand")
-public class Brand {
+public class Brand implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

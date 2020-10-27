@@ -39,4 +39,10 @@ public interface BrandService {
 
     @ApiOperation("分页查询品牌")
     PageResult findPage(int currentPage, int size);
+
+    @ApiOperation("条件并且分页查询")
+    PageResult findPageAndConditions(Brand brand,int currentPage, int size);
+
+    @ApiOperation("根据商品种类查询品牌")
+    List<Brand> findByCategory(String categoryName);
 }

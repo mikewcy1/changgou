@@ -72,27 +72,47 @@ public class BrandController {
 
     //根据品牌名或品牌首字母查询
     @GetMapping("/findByConditions")
-    public Result findByConditions(@RequestParam Map<String,Object> conditionsMap) {
+    public Result findByConditions(@RequestParam Map<String, Object> conditionsMap) {
         List<Brand> brandList = brandService.findByConditions(conditionsMap);
         if (brandList != null) {
-            return new Result(true, StatusCode.OK, "条件查询成功",brandList);
+            return new Result(true, StatusCode.OK, "条件查询成功", brandList);
         }
         return new Result(false, StatusCode.ERROR, "条件查询失败");
     }
 
     //根据品牌对象查询
     @GetMapping("/findByBrand")
-    public Result findByBrand( Brand brand) {
+    public Result findByBrand(Brand brand) {
         List<Brand> brandList = brandService.findByBrand(brand);
-        if (brandList != null) {
-            return new Result(true, StatusCode.OK, "条件查询成功",brandList);
+        if (brandList != null && !brandList.isEmpty()) {
+            return new Result(true, StatusCode.OK, "条件查询成功", brandList);
         }
         return new Result(false, StatusCode.ERROR, "条件查询失败");
     }
 
     //分页查询品牌数据
     @GetMapping("/findPage/{currentPage}/{size}")
-    public PageResult findPage(@PathVariable("currentPage") int currentPage,@PathVariable("size") int size){
+    public PageResult findPage(@PathVariable("currentPage") int currentPage, @PathVariable("size") int size) {
         return brandService.findPage(currentPage, size);
+    }
+
+    //分页查询品牌数据
+    @GetMapping("/findPageAndConditions/{currentPage}/{size}")
+    public Result findPageAndConditions(Brand brand, @PathVariable("currentPage") int currentPage, @PathVariable("size") int size) {
+        PageResult page = brandService.findPageAndConditions(brand, currentPage, size);
+        if (page != null) {
+            return new Result(true, StatusCode.OK, "分页条件查询成功", page);
+        }
+        return new Result(false, StatusCode.ERROR, "分页条件查询失败");
+    }
+
+    //根据商品种类查询品牌数据
+    @GetMapping("/findByCategory/{category}")
+    public Result findByCategory(@PathVariable String category) {
+        List<Brand> brandList = brandService.findByCategory(category);
+        if (brandList != null && !brandList.isEmpty()) {
+            return new Result(true, StatusCode.OK, "根据商品种类查询成功", brandList);
+        }
+        return new Result(false, StatusCode.ERROR, "根据商品种类查询失败");
     }
 }

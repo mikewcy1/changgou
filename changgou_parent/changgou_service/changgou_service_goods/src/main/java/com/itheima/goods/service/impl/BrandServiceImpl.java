@@ -114,16 +114,18 @@ public class BrandServiceImpl implements BrandService {
      */
     @Override
     public List<Brand> findByBrand(Brand brand) {
+        //自定义类
         Example example = new Example(Brand.class);
+        //用于拼接条件
         Example.Criteria criteria = example.createCriteria();
         if (brand != null) {
             //品牌名
-            if (brand.getName() != null && !"".equals(brand.getName())){
-                criteria.andLike("name","%"+brand.getName()+"%");
+            if (brand.getName() != null && !"".equals(brand.getName())) {
+                criteria.andLike("name", "%" + brand.getName() + "%");
             }
             //品牌对象
-            if (brand.getLetter()!= null && !"".equals(brand.getLetter())){
-                criteria.andEqualTo("letter",brand.getLetter());
+            if (brand.getLetter() != null && !"".equals(brand.getLetter())) {
+                criteria.andEqualTo("letter", brand.getLetter());
             }
         }
 
@@ -133,13 +135,56 @@ public class BrandServiceImpl implements BrandService {
 
     /**
      * 分页查询
+     *
      * @param currentPage 当前页
-     * @param size 每页显示条数
+     * @param size        每页显示条数
      * @return
      */
     @Override
     public PageResult findPage(int currentPage, int size) {
-        Page<Brand> page = PageHelper.startPage(currentPage, size);
-        return new PageResult(page.getTotal(),page.getResult());
+        //使用分业助手
+        PageHelper.startPage(currentPage, size);
+        Page<Brand> brands = (Page<Brand>) brandMapper.selectAll();
+        return new PageResult(brands.getTotal(), brands.getResult());
+    }
+
+    /**
+     * @param brand       品牌对象
+     * @param currentPage 当前页
+     * @param size        每页显示条数
+     * @return
+     */
+    @Override
+    public PageResult findPageAndConditions(Brand brand, int currentPage, int size) {
+        //设置分业条件
+        PageHelper.startPage(currentPage, size);
+        //自定义类
+        Example example = new Example(Brand.class);
+        //用于拼接条件
+        Example.Criteria criteria = example.createCriteria();
+        if (brand != null) {
+            //按品牌名称
+            if (brand.getName() != null && !"".equals(brand.getName())) {
+                criteria.andLike("name", "%" + brand.getName() + "%");
+            }
+            //按首字母
+            if (brand.getLetter() != null && !"".equals(brand.getLetter())) {
+                criteria.andEqualTo("letter", brand.getLetter());
+            }
+        }
+        //制造异常
+        //int i = 1/0;
+        Page<Brand> brands = (Page<Brand>) brandMapper.selectByExample(example);
+        return new PageResult(brands.getTotal(), brands.getResult());
+    }
+
+    /**
+     *
+     * @param categoryName 商品种类名称
+     * @return
+     */
+    @Override
+    public List<Brand> findByCategory(String categoryName) {
+        return brandMapper.findByCategory(categoryName);
     }
 }
