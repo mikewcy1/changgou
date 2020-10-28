@@ -1,16 +1,70 @@
 package com.itheima.goods.service;
 
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.github.pagehelper.Page;
+import com.itheima.goods.pojo.Category;
 
+import java.util.List;
+import java.util.Map;
 
-
-/*
- * @author 王昌耀
- * @date 2020/10/27 14:26
- */
-@Api(value = "商品种类接口管理页面", description = "商品种类接口,提供页面的增删改查")
 public interface CategoryService {
+
+    /***
+     * 查询所有
+     * @return
+     */
+    List<Category> findAll();
+
+    /**
+     * 根据ID查询
+     * @param id
+     * @return
+     */
+    Category findById(Integer id);
+
+    /***
+     * 新增
+     * @param category
+     */
+    void add(Category category);
+
+    /***
+     * 修改
+     * @param category
+     */
+    void update(Category category);
+
+    /***
+     * 删除
+     * @param id
+     */
+    void delete(Integer id);
+
+    /***
+     * 多条件搜索
+     * @param searchMap
+     * @return
+     */
+    List<Category> findList(Map<String, Object> searchMap);
+
+    /***
+     * 分页查询
+     * @param page
+     * @param size
+     * @return
+     */
+    Page<Category> findPage(int page, int size);
+
+    /***
+     * 多条件分页查询
+     * @param searchMap
+     * @param page
+     * @param size
+     * @return
+     */
+    Page<Category> findPage(Map<String, Object> searchMap, int page, int size);
+
+
+
 
 }

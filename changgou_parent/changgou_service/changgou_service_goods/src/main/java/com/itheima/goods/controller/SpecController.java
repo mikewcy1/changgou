@@ -6,17 +6,22 @@ import com.itheima.common.entity.Result;
 import com.itheima.common.entity.StatusCode;
 import com.itheima.goods.pojo.Spec;
 import com.itheima.goods.service.SpecService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /*
  * @author 王昌耀
  * @date 2020/10/27 14:45
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/spec")
+@Api(tags="规格管理",value = "商品规格接口管理页面", description = "商品规格接口,提供页面的增删改查")
 public class SpecController {
 
     @Autowired
@@ -29,6 +34,7 @@ public class SpecController {
      * @param pageSize  每页显示条数
      * @return
      */
+    @ApiOperation("分页或者多条件查询规格数据")
     @GetMapping("/findPage/{currentPage}/{pageSize}")
     public Result findPageByConditions(Spec spec, @PathVariable("currentPage") int currentPage, @PathVariable("pageSize") int pageSize) {
         Page<Spec> specPage = specService.findPage(spec, currentPage, pageSize);
@@ -44,6 +50,7 @@ public class SpecController {
      * @param spec
      * @return
      */
+    @ApiOperation("多条件搜索品牌数据")
     @GetMapping("/findByConditions")
     public Result findByConditions(Spec spec) {
         List<Spec> specList = specService.findByConditions(spec);
@@ -60,8 +67,9 @@ public class SpecController {
      * @param id
      * @return
      */
+    @ApiOperation("根据id删除规格")
     @DeleteMapping("/deleteById/{id}")
-    public Result update(@PathVariable("id") Integer id) {
+    public Result delete(@PathVariable("id") Integer id) {
         int count = specService.deleteById(id);
         if (count > 0) {
             return new Result(true, StatusCode.OK, "删除成功");
@@ -76,6 +84,7 @@ public class SpecController {
      * @param spec
      * @return
      */
+    @ApiOperation("修改规格")
     @PutMapping("/update")
     public Result update(@RequestBody Spec spec) {
         int count = specService.update(spec);
@@ -91,6 +100,7 @@ public class SpecController {
      * @param spec
      * @return
      */
+    @ApiOperation("添加规格")
     @PostMapping("/add")
     public Result add(@RequestBody Spec spec) {
         int count = specService.save(spec);
@@ -105,6 +115,7 @@ public class SpecController {
      *
      * @return
      */
+    @ApiOperation("查询所有的规格")
     @GetMapping("/findAll")
     public Result findAll() {
         List<Spec> specList = specService.findAll();
@@ -118,6 +129,7 @@ public class SpecController {
      * @param id
      * @return
      */
+    @ApiOperation("根据id查询所有的规格")
     @GetMapping("/findById/{id}")
     public Result findById(@PathVariable("id") Integer id) {
         Spec spec = specService.findById(id);
@@ -134,9 +146,10 @@ public class SpecController {
      * @param categoryName
      * @return
      */
+    @ApiOperation("根据种类名称查询规格")
     @GetMapping("/findByCategoryName/{categoryName}")
     public Result findSpecByCategoryName(@PathVariable("categoryName") String categoryName) {
-        List<Spec> specList = specService.findByCategoryName(categoryName);
+        List<Map> specList = specService.findByCategoryName(categoryName);
         if (specList != null && !specList.isEmpty()) {
             return new Result(true, StatusCode.OK, "查询规格成功", specList);
         }

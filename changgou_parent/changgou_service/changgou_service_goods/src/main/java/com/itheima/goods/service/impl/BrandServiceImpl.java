@@ -155,7 +155,7 @@ public class BrandServiceImpl implements BrandService {
      * @return
      */
     @Override
-    public PageResult findPageAndConditions(Brand brand, int currentPage, int size) {
+    public PageResult findPage(Brand brand, int currentPage, int size) {
         //设置分业条件
         PageHelper.startPage(currentPage, size);
         //自定义类

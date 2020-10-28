@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SpecServiceImpl implements SpecService {
@@ -29,8 +30,14 @@ public class SpecServiceImpl implements SpecService {
      * @return
      */
     @Override
-    public List<Spec> findByCategoryName(String categoryName) {
-        return specMapper.findByCategoryName(categoryName);
+    public List<Map> findByCategoryName(String categoryName) {
+        List<Map> mapList = specMapper.findByCategoryName(categoryName);
+        for (Map map : mapList) {
+            String optionsStr = (String) map.get("options");
+            String[] options = optionsStr.split(",");
+            map.put("options", options);
+        }
+        return mapList;
     }
 
     /**
