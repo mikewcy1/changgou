@@ -2,6 +2,7 @@ package com.itheima.goods.service;
 
 
 import com.github.pagehelper.Page;
+import com.itheima.goods.pojo.Goods;
 import com.itheima.goods.pojo.Spu;
 
 import java.util.List;
@@ -24,15 +25,15 @@ public interface SpuService {
 
     /***
      * 新增
-     * @param spu
+     * @param goods
      */
-    void add(Spu spu);
+    void add(Goods goods);
 
     /***
      * 修改
-     * @param spu
+     * @param goods
      */
-    void update(Spu spu);
+    void update(Goods goods);
 
     /***
      * 删除
@@ -64,7 +65,42 @@ public interface SpuService {
      */
     Page<Spu> findPage(Map<String, Object> searchMap, int page, int size);
 
+    /**
+     *  根据id查询
+     * @param id
+     * @return
+     */
+    Goods findGoodsById(String id);
+
+    /**
+     * 商品审核
+     * @param id
+     */
+    void audit(String id);
+
+    /**
+     * 商品下架
+     * @param id
+     */
+    void pull(String id);
+
+    /**
+     * 商品上架
+     * @param id
+     */
+    void put(String id);
 
 
+    /**
+     * 还原逻辑删除的商品
+     * @param id
+     */
+    void restore(String id);
 
+
+    /**
+     * 物理删除商品
+     * @param id
+     */
+    void realDelete(String id);
 }

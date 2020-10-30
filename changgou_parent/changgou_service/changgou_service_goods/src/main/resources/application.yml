@@ -6,7 +6,7 @@ spring:
     name: goods
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://39.107.64.85:3306/changgou_goods?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://39.107.64.85:3306/changgou_goods?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
     password: root
 
@@ -31,7 +31,9 @@ hystrix:
         isolation:
           strategy: SEMAPHORE
 
-
+#雪花算法
+workId: 0 #机器id
+datacenter: 0 #实例id
 
 
 

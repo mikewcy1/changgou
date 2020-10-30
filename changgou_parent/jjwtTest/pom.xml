@@ -9,11 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>changgou_gateway</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>changgou_gateway_system</module>
-    </modules>
+    <artifactId>jjwtTest</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.0</version>
+        </dependency>
+    </dependencies>
 </project>

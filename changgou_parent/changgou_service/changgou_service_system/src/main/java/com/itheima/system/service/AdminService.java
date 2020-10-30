@@ -9,6 +9,13 @@ import java.util.Map;
 
 public interface AdminService {
 
+    /**
+     * 根据密码登录
+     * @param admin
+     * @return
+     */
+    boolean login(Admin admin);
+
     /***
      * 查询所有
      * @return
