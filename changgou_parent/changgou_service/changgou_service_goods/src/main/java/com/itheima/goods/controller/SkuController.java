@@ -1,5 +1,6 @@
 package com.itheima.goods.controller;
 
+
 import com.github.pagehelper.Page;
 import com.itheima.common.entity.PageResult;
 import com.itheima.common.entity.Result;
@@ -8,6 +9,8 @@ import com.itheima.goods.pojo.Sku;
 import com.itheima.goods.service.SkuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @RestController
@@ -104,5 +107,17 @@ public class SkuController {
         return new Result(true,StatusCode.OK,"查询成功",pageResult);
     }
 
+    @GetMapping("/spu/{spuId}")
+    public List<Sku> findSkuListBySpuId(@PathVariable("spuId") String spuId){
+        Map<String,Object> searchMap = new HashMap<>();
+        //判断如果spuId不等于all这个固定字符,就添加spuId
+        if (!"all".equals(spuId)){
+            searchMap.put("spuId",spuId);
+        }
+        //添加状态为1,审核通过才会加入到elasticsearch中
+        searchMap.put("status","1");
+        List<Sku> list = skuService.findList(searchMap);
+        return list;
+    }
 
 }

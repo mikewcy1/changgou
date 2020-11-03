@@ -50,7 +50,7 @@ public class SpecController {
      * @param spec
      * @return
      */
-    @ApiOperation("多条件搜索品牌数据")
+    @ApiOperation("多条件搜索规格数据")
     @GetMapping("/findByConditions")
     public Result findByConditions(Spec spec) {
         List<Spec> specList = specService.findByConditions(spec);
